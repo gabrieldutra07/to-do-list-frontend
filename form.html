@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Formulário de cadastro</h2>
+        <form action="#" method="POST">
+            <div class="input-group">
+                <label for="username">E-mail:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Confirmar</button>
+        </form>
+        <p><a href="#" id="back-login">Voltar</a></p>
+    </div>
+    <script>
+        // Seleciona o link pelo ID
+        var signupLink = document.getElementById('back-login');
+        
+        // Adiciona um ouvinte de evento de clique ao link
+        signupLink.addEventListener('click', function(event) {
+            
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
