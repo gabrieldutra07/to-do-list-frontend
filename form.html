@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="/css/style.css">
+    <script src="js/script.js"></script>
 </head>
 <body>
     <div class="login-container">
-        <h2>Formulário de cadastro</h2>
-        <form action="#" method="POST">
+        <h2>Cadastro</h2>
             <div class="input-group">
                 <label for="username">E-mail:</label>
                 <input type="text" id="username" name="username" required>
@@ -18,8 +18,7 @@
                 <label for="password">Senha:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Confirmar</button>
-        </form>
+            <button onclick="createUser()" type="submit">Confirmar</button>
         <p><a href="#" id="back-login">Voltar</a></p>
     </div>
     <script>

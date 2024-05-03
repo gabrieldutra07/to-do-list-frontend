@@ -1,11 +1,26 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    if (!username || !password) {
-        alert('Por favor, preencha todos os campos.');
-    } else {
-        alert('Login realizado com sucesso!');
-        // Aqui você pode adicionar mais lógica, como redirecionar para outra página
-    }
-});
+function createUser() {
+    const email = document.getElementById("username").value
+    const password = document.getElementById("password").value
+    var data = JSON.stringify({
+        "email": email,
+        "password": password
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            if(this.status === 201) {
+                alert("Cadastro realizado com sucesso!")
+                window.location.href = 'index.html'
+            }
+            console.log(this.responseText);
+        }
+    });
+
+    xhr.open("POST", "http://localhost:8080/api/todolist/user/create");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.send(data);
+}
