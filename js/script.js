@@ -1,4 +1,4 @@
-function validateIsAuth() {
+const validateIsAuth = () => {
     const isAuth = localStorage.getItem("isAuth")
 
     if(!isAuth) {
@@ -6,9 +6,25 @@ function validateIsAuth() {
     }
 }
 
-function createUser() {
+const validatePassword = () => {
+    const password = document.getElementById("password").value
+
+    console.log(password)
+
+    if(password.length < 8) {
+        document.getElementById("password-incorrect").removeAttribute("hidden")
+        return true
+    }
+}
+
+const createUser = () => {
     const email = document.getElementById("username").value
     const password = document.getElementById("password").value
+
+    if(validatePassword()) {
+        return
+    }
+
     var data = JSON.stringify({
         "email": email,
         "password": password
@@ -33,7 +49,7 @@ function createUser() {
     xhr.send(data);
 }
 
-function login() {
+const login = () => {
     const email = document.getElementById("username").value
     const password = document.getElementById("password").value
     var data = JSON.stringify({
