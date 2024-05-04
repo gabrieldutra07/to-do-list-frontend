@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,31 +8,37 @@
     <link rel="stylesheet" href="/css/style.css">
     <script src="js/script.js"></script>
 </head>
+
 <body>
     <div class="login-container">
         <h2>Cadastro</h2>
         <p hidden id="email-incorrect">E-mail já cadastrado. Tente novamente!</p>
         <p hidden id="password-incorrect">Senha fraca! Coloque uma senha de no mínimo 8 caracteres.</p>
-            <div class="input-group">
-                <label for="username">E-mail:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button onclick="createUser()" type="submit">Confirmar</button>
+        <div class="input-group">
+            <label for="nameuser">Nome completo:</label>
+            <input type="text" id="nameuser" name="nameUser" required>
+        </div>
+        <div class="input-group">
+            <label for="username">E-mail:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button onclick="createUser()" type="submit">Confirmar</button>
         <p><a href="#" id="back-login">Voltar</a></p>
     </div>
     <script>
         // Seleciona o link pelo ID
         var signupLink = document.getElementById('back-login');
-        
+
         // Adiciona um ouvinte de evento de clique ao link
-        signupLink.addEventListener('click', function(event) {
-            
+        signupLink.addEventListener('click', function (event) {
+
             window.location.href = 'index.html';
         });
     </script>
 </body>
+
 </html>

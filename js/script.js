@@ -1,7 +1,17 @@
+const changePage = (id, page) => {
+    document.getElementById(id).addEventListener('click', function (event) {
+        window.location.href = page;
+    });
+}
+
+const setLocalStorage = (key, value) => {
+    localStorage.setItem(key, value)
+}
+
 const validateIsAuth = () => {
     const isAuth = localStorage.getItem("isAuth")
 
-    if(!isAuth) {
+    if (!isAuth) {
         window.location.href = 'index.html'
     }
 }
@@ -11,7 +21,7 @@ const validatePassword = () => {
 
     console.log(password)
 
-    if(password.length < 8) {
+    if (password.length < 8) {
         document.getElementById("password-incorrect").removeAttribute("hidden")
         return true
     }
@@ -20,14 +30,17 @@ const validatePassword = () => {
 const createUser = () => {
     const email = document.getElementById("username").value
     const password = document.getElementById("password").value
+    const nameUser = document.getElementById("nameuser").value
 
-    if(validatePassword()) {
+    if (validatePassword()) {
         return
     }
 
     var data = JSON.stringify({
         "email": email,
-        "password": password
+        "password": password,
+        "nameUser": nameUser
+
     });
 
     var xhr = new XMLHttpRequest();
@@ -62,9 +75,12 @@ const login = () => {
 
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-            if(this.status === 200) {
+            if (this.status === 200) {
+                const response = JSON.parse(this.responseText);
+                setLocalStorage("id", response.id)
+                setLocalStorage("nameUser", response.nameUser)
+                setLocalStorage("isAuth", true)
                 window.location.href = 'to-do-list.html'
-                localStorage.setItem("isAuth", true)
             } else if (this.status === 404) {
                 document.getElementById("login-incorrect").removeAttribute("hidden")
             }

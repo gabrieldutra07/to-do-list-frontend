@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Vertical e Tabela</title>
+    <link rel="stylesheet" href="css/list.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-header">
+                <a href="#home" class="navbar-brand">To Do List</a>
+                <p style="color: white; font-size: 12px;" id="welcomeText">Bem vindo, </p>
+            </div>
+            <ul class="nav-list">
+                <li><a href="#listar-listas" id="lista">Listas</a></li>
+                <li><a href="#criar-tarefa" id="tarefa">Tarefas</a></li>
+                <li><a href="#logout" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <table>
+                <tr>
+                    <th>Coluna 1</th>
+                    <th>Coluna 2</th>
+                    <th>Coluna 3</th>
+                </tr>
+                <tr>
+                    <td>Item 1</td>
+                    <td>Item 2</td>
+                    <td>Item 3</td>
+                </tr>
+                <tr>
+                    <td>Item 4</td>
+                    <td>Item 5</td>
+                    <td>Item 6</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        changePage('lista', 'lista.html');
+    };
+
+    window.onload = function () {
+        localStorage.removeItem("isAuth")
+        changePage('logout', 'index.html')
+    }
+
+    const userName = localStorage.getItem('nameUser');
+    if (userName) {
+        document.getElementById('welcomeText').innerHTML += ' ' + userName;
+    }
+</script>
+
+</html>
