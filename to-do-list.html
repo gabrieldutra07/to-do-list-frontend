@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +7,12 @@
     <link rel="stylesheet" href="/css/style.css">
     <script src="js/script.js"></script>
 </head>
-
 <body>
+    <script>
+        validateIsAuth()
+    </script>
     <div class="login-container">
-        <h2>To-do-list</h2>
-        <p hidden id="login-incorrect">Login inválido. Tente novamente</p>
+        <h2>Cadastro</h2>
             <div class="input-group">
                 <label for="username">E-mail:</label>
                 <input type="text" id="username" name="username" required>
@@ -21,18 +21,18 @@
                 <label for="password">Senha:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" onclick="login()">Login</button>
-            <p>Não tem uma conta? <a href="#" id="signup-link">Cadastre-se!</a></p>
+            <button onclick="createUser()" type="submit">Confirmar</button>
+        <p><a href="#" id="back-login">Voltar</a></p>
     </div>
-
     <script>
-        var signupLink = document.getElementById('signup-link');
-
-        signupLink.addEventListener('click', function (event) {
-
-            window.location.href = 'form.html';
+        // Seleciona o link pelo ID
+        var signupLink = document.getElementById('back-login');
+        
+        // Adiciona um ouvinte de evento de clique ao link
+        signupLink.addEventListener('click', function(event) {
+            
+            window.location.href = 'index.html';
         });
     </script>
 </body>
-
 </html>
