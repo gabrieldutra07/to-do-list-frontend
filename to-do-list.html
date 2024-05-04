@@ -5,19 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar Exemplo</title>
     <link rel="stylesheet" href="css/todo.css">
+    <script src="js/script.js"></script>
 </head>
+<script>
+    validateIsAuth()
+</script>
 <body>
     <nav class="navbar">
         <div class="navbar-header">
             <a href="#home" class="navbar-brand">To Do List</a>
         </div>
         <ul class="nav-list">
-            <li><a href="#listar-tarefas">Listar tarefas</a></li>
-            <li><a href="#criar-tarefa">Criar tarefa</a></li>
-            <li><a href="#listar-listas">Listar listas</a></li>
-            <li><a href="#criar-lista">Criar lista</a></li>
-            <li><a href="#logout">Logout</a></li>
+            <li><a href="#listar-listas">Listas</a></li>
+            <li><a href="#criar-tarefa">Tarefas</a></li>
+            <li><a href="#logout" id="logout">Logout</a></li>
         </ul>
     </nav>
 </body>
+<script>
+    var signupLink = document.getElementById('logout');
+
+    signupLink.addEventListener('click', function (event) {
+        
+        localStorage.removeItem("isAuth")
+        window.location.href = 'index.html'
+    });
+</script>
 </html>
