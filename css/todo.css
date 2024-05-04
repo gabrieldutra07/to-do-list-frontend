@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    width: 200px; /* Define a fixed width */
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+}
+
+.navbar-header {
+    padding: 20px; /* Padding for the header */
+    border-bottom: 1px solid #555; /* Visual separation from the items */
+}
+
+.navbar-brand {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* Make list vertical */
+    justify-content: flex-start;
+}
+
+.nav-list li a {
+    display: block;
+    color: white;
+    text-align: left;
+    padding: 10px 20px; /* Adjust padding for vertical layout */
+    text-decoration: none;
+    white-space: nowrap; /* Ensures text doesn't wrap */
+}
+
+.nav-list li a:hover {
+    background-color: #555;
+}

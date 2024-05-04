@@ -1,38 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="js/script.js"></script>
+    <title>Navbar Exemplo</title>
+    <link rel="stylesheet" href="css/todo.css">
 </head>
 <body>
-    <script>
-        validateIsAuth()
-    </script>
-    <div class="login-container">
-        <h2>Cadastro</h2>
-            <div class="input-group">
-                <label for="username">E-mail:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button onclick="createUser()" type="submit">Confirmar</button>
-        <p><a href="#" id="back-login">Voltar</a></p>
-    </div>
-    <script>
-        // Seleciona o link pelo ID
-        var signupLink = document.getElementById('back-login');
-        
-        // Adiciona um ouvinte de evento de clique ao link
-        signupLink.addEventListener('click', function(event) {
-            
-            window.location.href = 'index.html';
-        });
-    </script>
+    <nav class="navbar">
+        <div class="navbar-header">
+            <a href="#home" class="navbar-brand">To Do List</a>
+        </div>
+        <ul class="nav-list">
+            <li><a href="#listar-tarefas">Listar tarefas</a></li>
+            <li><a href="#criar-tarefa">Criar tarefa</a></li>
+            <li><a href="#listar-listas">Listar listas</a></li>
+            <li><a href="#criar-lista">Criar lista</a></li>
+            <li><a href="#logout">Logout</a></li>
+        </ul>
+    </nav>
 </body>
 </html>
