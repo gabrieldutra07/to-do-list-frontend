@@ -24,10 +24,18 @@
             </ul>
         </nav>
         <div class="content">
-            <button class="create-btn">Criar Nova Tarefa</button><p hidden id="textList">Título</p> <input id="criarList" hidden type="text" /><br>
-            <button hidden class="create-btn" id="confirmCreate" onclick="createList()">Confirmar</button>
-            Selecione a lista que você deseja visualizar:
+            <button class="create-btn" id="createTask">Criar Nova Tarefa</button>
+            <p hidden id="descriptionTask">Descrição da tarefa:</p><br>
+            <input id="criarTask" hidden type="text" /><br>
+            <p hidden id="completedTask">Tarefá já completada?</p><br>
+            <select hidden id="selectCompletedTask">
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+            </select>
+            <br>
+            <p id="textTask"></p><br>
             <select id="listaSelecao"></select><br>
+            <button hidden class="create-btn" id="confirmCreateTask" onclick="createTask()">Confirmar</button>
             <table id="myTable">
                 <thead>
                     <tr>
@@ -36,9 +44,7 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody id="tableBodyTask">
-                    <!-- As linhas da tabela serão adicionadas aqui -->
-                </tbody>
+                <tbody id="tableBodyTask"></tbody>
             </table>
         </div>
     </div>
@@ -56,6 +62,21 @@
     getList(localStorage.getItem("id"), false)
 
     document.getElementById("listaSelecao").addEventListener("change", handleSelecaoChange);
+
+    const changeParagrafo = (text) => {
+        document.getElementById("textTask").innerHTML = text
+    }
+
+  changeParagrafo("Selecione a lista que você deseja visualizar:")
+
+    document.getElementById("createTask").addEventListener("click", function () {
+        document.getElementById("descriptionTask").removeAttribute("hidden")
+        document.getElementById("completedTask").removeAttribute("hidden")
+        document.getElementById("selectCompletedTask").removeAttribute("hidden")
+        document.getElementById("confirmCreateTask").removeAttribute("hidden")
+        document.getElementById("criarTask").removeAttribute("hidden")
+        changeParagrafo("Selecione a lista que você seja para criar a sua tarefa:")
+    })
     
 </script>
 

@@ -63,6 +63,49 @@ const createList = () => {
     xhr.send(data);
 }
 
+const createTask = () => {
+
+    const listId = document.getElementById("listaSelecao").value
+    const description = document.getElementById("criarTask").value
+    const completedTask = document.getElementById("selectCompletedTask").value
+
+    console.log(description)
+
+    var data = JSON.stringify({
+        "listId": listId,
+        "description": description,
+        "complete": completedTask
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            alert("Tarefa criada com sucesso!")
+            document.getElementById("descriptionTask").setAttribute("hidden", true)
+            document.getElementById("completedTask").setAttribute("hidden", true)
+            document.getElementById("selectCompletedTask").setAttribute("hidden", true)
+            document.getElementById("confirmCreateTask").setAttribute("hidden", true)
+            document.getElementById("criarTask").setAttribute("hidden", true)
+            handleSelecaoChange()
+        }
+    });
+
+    xhr.open("POST", "http://localhost:8080/api/todolist/task/create");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.send(data);
+}
+
+const formatCompleted = (data) => {
+    if (data) {
+        return "Sim"
+    } 
+
+    return "Não"
+}
+
 const createUser = () => {
     const email = document.getElementById("username").value
     const password = document.getElementById("password").value
@@ -160,7 +203,7 @@ const preencherTabelaTask = (data) => {
         var completeCell = document.createElement("td");
 
         descriptionCell.textContent = item.description;
-        completeCell.textContent = item.complete
+        completeCell.textContent = formatCompleted(item.complete)
 
         row.appendChild(descriptionCell);
         row.appendChild(completeCell);
@@ -200,7 +243,7 @@ const getTask = (listId) => {
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             var responseData = JSON.parse(this.responseText);
-    
+
             preencherTabelaTask(responseData);
         }
     });
@@ -230,5 +273,5 @@ const preencherSelect = (dados) => {
 const handleSelecaoChange = () => {
     const select = document.getElementById("listaSelecao");
     getTask(select.value);
-    
+
 }
