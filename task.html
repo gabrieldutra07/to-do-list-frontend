@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar Vertical e Tabela</title>
     <link rel="stylesheet" href="css/list.css">
+    <script src="js/script.js"></script>
 </head>
 <body>
+    <script>
+        validateIsAuth()
+    </script>
     <div class="container">
         <nav class="navbar">
             <div class="navbar-header">
-                <a href="#home" class="navbar-brand">To Do List</a>
-                <p style="color: white; font-size: 12px;" id="welcomeText">Bem vindo, </p>
+                <h1>To do list</h1>
+                <p id="welcomeText">Bem vindo, </p>
             </div>
             <ul class="nav-list">
                 <li><a href="#listar-listas" id="lista">Listas</a></li>
@@ -20,40 +24,37 @@
             </ul>
         </nav>
         <div class="content">
-            <table>
-                <tr>
-                    <th>Coluna 1</th>
-                    <th>Coluna 2</th>
-                    <th>Coluna 3</th>
-                </tr>
-                <tr>
-                    <td>Item 1</td>
-                    <td>Item 2</td>
-                    <td>Item 3</td>
-                </tr>
-                <tr>
-                    <td>Item 4</td>
-                    <td>Item 5</td>
-                    <td>Item 6</td>
-                </tr>
+            <button class="create-btn">Criar Nova Lista</button>          
+            <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Data Criação</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- As linhas da tabela serão adicionadas aqui -->
+                </tbody>
             </table>
         </div>
     </div>
 </body>
 <script>
     window.onload = function () {
-        changePage('lista', 'lista.html');
+        changePage('tarefa', 'task.html');
     };
 
     window.onload = function () {
-        localStorage.removeItem("isAuth")
-        changePage('logout', 'index.html')
-    }
+        changePage('lista', 'list.html');
+    };
 
     const userName = localStorage.getItem('nameUser');
     if (userName) {
         document.getElementById('welcomeText').innerHTML += ' ' + userName;
     }
+
+    const listData = getTask(localStorage.getItem("id"))
+    
 </script>
 
 </html>

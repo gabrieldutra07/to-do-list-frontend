@@ -1,3 +1,10 @@
+const findName = () => {
+    const userName = localStorage.getItem('nameUser');
+    if (userName) {
+        document.getElementById('welcomeText').innerHTML += ' ' + userName;
+    }
+}
+
 const changePage = (id, page) => {
     document.getElementById(id).addEventListener('click', function (event) {
         window.location.href = page;
@@ -80,11 +87,10 @@ const login = () => {
                 setLocalStorage("id", response.id)
                 setLocalStorage("nameUser", response.nameUser)
                 setLocalStorage("isAuth", true)
-                window.location.href = 'to-do-list.html'
+                window.location.href = 'lista.html'
             } else if (this.status === 404) {
                 document.getElementById("login-incorrect").removeAttribute("hidden")
             }
-            console.log(this.responseText);
         }
     });
 
@@ -92,4 +98,40 @@ const login = () => {
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.send(data);
+}
+
+function preencherTabela(data) {
+    var tableBody = document.getElementById("tableBody");
+
+    data.forEach(function(item) {
+        var row = document.createElement("tr");
+        var titleCell = document.createElement("td");
+        var dateCell = document.createElement("td");
+
+        titleCell.textContent = item.title;
+        dateCell.textContent = new Date(item.dateCreated).toLocaleDateString('pt-BR');
+
+        row.appendChild(titleCell);
+        row.appendChild(dateCell);
+
+        tableBody.appendChild(row);
+    });
+}
+
+const getList = (id) => {
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            var responseData = JSON.parse(this.responseText);
+                // Chamar a função para preencher a tabela com os dados recebidos
+            preencherTabela(responseData);
+        }
+    });
+
+    xhr.open("GET", "http://localhost:8080/api/todolist/list/get?userId="+ id +"")
+
+    xhr.send();
 }

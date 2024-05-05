@@ -45,3 +45,81 @@ body {
 .nav-list li a:hover {
     background-color: #555;
 }
+
+/* Reset básico para espaçamentos e listas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.navbar {
+    width: 200px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+}
+
+.navbar-header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #555;
+}
+
+.navbar-header h1 {
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+
+.navbar-header p {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 10px;
+}
+
+.navbar ul li a:hover {
+    background-color: #555;
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table {
+    width: 50%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}

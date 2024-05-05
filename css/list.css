@@ -7,55 +7,125 @@
 
 body, html {
     height: 100%;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
+    background: #f4f4f9; /* Fundo suave para não cansar a vista */
+    color: #333; /* Cor de texto suave */
 }
 
 .container {
     display: flex;
     height: 100%;
+    align-items: stretch; /* Garante que os elementos filhos preencham a altura */
 }
 
 .navbar {
-    width: 200px;
-    height: 100%;
-    background-color: #333;
+    width: 240px; /* Largura ajustada */
+    background: linear-gradient(to bottom, #5d67ac 0%, #3943b7 100%); /* Gradiente moderno */
     color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1); /* Sombra para dar profundidade */
+}
+
+.navbar-header {
+    text-align: center;
+    padding: 30px;
+    border-bottom: 1px solid #444; /* Bordar mais sutil */
+}
+
+.navbar-header h1 {
+    font-size: 26px; /* Tamanho maior para o título */
+    margin-bottom: 8px;
+}
+
+.navbar-header p {
+    font-size: 16px; /* Tamanho ajustado para o subtítulo */
+    opacity: 0.9; /* Opacidade para diferenciar do título */
 }
 
 .navbar ul {
     list-style-type: none;
     padding: 20px;
+    flex-grow: 1; /* Faz com que a lista preencha o espaço disponível */
 }
 
 .navbar ul li a {
     text-decoration: none;
     color: white;
     display: block;
-    padding: 10px;
+    padding: 12px 20px; /* Padding maior para melhor cliquabilidade */
+    transition: background 0.3s; /* Transição suave para hover */
 }
 
 .navbar ul li a:hover {
-    background-color: #555;
+    background-color: #5061a9; /* Cor mais suave no hover */
 }
 
 .content {
     flex-grow: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 20px; /* Padding para espaçamento interno */
+}
+
+.create-btn {
+    margin-bottom: 20px;
+    padding: 10px 25px;
+    font-size: 18px; /* Fonte maior para o botão */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra para botão */
+    cursor: pointer;
+    transition: background 0.3s; /* Transição suave para hover */
+}
+
+.create-btn:hover {
+    background-color: #45a049; /* Mudança suave de cor no hover */
 }
 
 table {
-    width: 50%;
+    width: 60%; /* Largura ajustada para melhor visualização */
     border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
 }
 
 th, td {
-    border: 1px solid black;
-    padding: 8px;
+    border: 1px solid #ccc; /* Bordas mais suaves */
+    padding: 12px 15px; /* Espaçamento interno maior */
     text-align: left;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #5d67ac; /* Cor de fundo para cabeçalhos */
+    color: white;
+    border-color: #5061a9; /* Bordas mais escuras nos cabeçalhos */
+}
+
+.input-group {
+    margin-top: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Garante que padding não afete a largura definida */
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #4A90E2; /* Cor ao focar no input */
+    outline: none; /* Remove o contorno padrão do navegador */
 }
