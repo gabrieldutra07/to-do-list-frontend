@@ -54,7 +54,7 @@
     changePage('tarefa', 'task.html');
     findName()
 
-    const listData = getList(localStorage.getItem("id"))
+    const listData = getList(localStorage.getItem("id"), true)
 
     document.getElementById("logout").addEventListener("click", function () {
         localStorage.removeItem("isAuth")

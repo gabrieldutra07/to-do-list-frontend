@@ -24,15 +24,19 @@
             </ul>
         </nav>
         <div class="content">
-            <button class="create-btn">Criar Nova Lista</button>          
+            <button class="create-btn">Criar Nova Tarefa</button><p hidden id="textList">Título</p> <input id="criarList" hidden type="text" /><br>
+            <button hidden class="create-btn" id="confirmCreate" onclick="createList()">Confirmar</button>
+            Selecione a lista que você deseja visualizar:
+            <select id="listaSelecao"></select><br>
             <table id="myTable">
                 <thead>
                     <tr>
-                        <th>Título</th>
-                        <th>Data Criação</th>
+                        <th>Descrição</th>
+                        <th>Completada?</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
+                <tbody id="tableBodyTask">
                     <!-- As linhas da tabela serão adicionadas aqui -->
                 </tbody>
             </table>
@@ -49,7 +53,9 @@
         window.location.href = "index.html"
     })
 
-    const listData = getTask(localStorage.getItem("id"))
+    getList(localStorage.getItem("id"), false)
+
+    document.getElementById("listaSelecao").addEventListener("change", handleSelecaoChange);
     
 </script>
 

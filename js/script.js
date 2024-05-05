@@ -35,7 +35,7 @@ const validatePassword = () => {
 }
 
 const createList = () => {
-   
+
     const id = localStorage.getItem("id")
     const title = document.getElementById("criarList").value
 
@@ -43,23 +43,23 @@ const createList = () => {
         "userId": id,
         "title": title
     });
-    
+
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-    
-    xhr.addEventListener("readystatechange", function() {
-        if(this.readyState === 4) {
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
             alert("Lista criada com sucesso!")
             document.getElementById("textList").setAttribute("hidden", true)
             document.getElementById("criarList").setAttribute("hidden", true)
             document.getElementById("confirmCreate").setAttribute("hidden", true)
-            getList(id)
+            getList(id, true)
         }
     });
-    
+
     xhr.open("POST", "http://localhost:8080/api/todolist/list/create");
     xhr.setRequestHeader("Content-Type", "application/json");
-    
+
     xhr.send(data);
 }
 
@@ -129,12 +129,12 @@ const login = () => {
     xhr.send(data);
 }
 
-function preencherTabela(data) {
+const preencherTabelaList = (data) => {
     var tableBody = document.getElementById("tableBody");
 
     tableBody.innerHTML = ""
 
-    data.forEach(function(item) {
+    data.forEach(function (item) {
         var row = document.createElement("tr");
         var titleCell = document.createElement("td");
         var dateCell = document.createElement("td");
@@ -149,7 +149,27 @@ function preencherTabela(data) {
     });
 }
 
-const getList = (id) => {
+const preencherTabelaTask = (data) => {
+    var tableBody = document.getElementById("tableBodyTask");
+
+    tableBody.innerHTML = ""
+
+    data.forEach(function (item) {
+        var row = document.createElement("tr");
+        var descriptionCell = document.createElement("td");
+        var completeCell = document.createElement("td");
+
+        descriptionCell.textContent = item.description;
+        completeCell.textContent = item.complete
+
+        row.appendChild(descriptionCell);
+        row.appendChild(completeCell);
+
+        tableBody.appendChild(row);
+    });
+}
+
+const getList = (id, isList) => {
 
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
@@ -157,12 +177,58 @@ const getList = (id) => {
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             var responseData = JSON.parse(this.responseText);
-                // Chamar a função para preencher a tabela com os dados recebidos
-            preencherTabela(responseData);
+            // Chamar a função para preencher a tabela com os dados recebidos
+            if (isList) {
+                preencherTabelaList(responseData);
+            } else {
+                preencherSelect(responseData)
+            }
+
         }
     });
 
-    xhr.open("GET", "http://localhost:8080/api/todolist/list/get?userId="+ id +"")
+    xhr.open("GET", "http://localhost:8080/api/todolist/list/get?userId=" + id + "")
 
     xhr.send();
+}
+
+const getTask = (listId) => {
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            var responseData = JSON.parse(this.responseText);
+    
+            preencherTabelaTask(responseData);
+        }
+    });
+
+    xhr.open("GET", "http://localhost:8080/api/todolist/task/get?listId=" + listId + "")
+
+    xhr.send();
+}
+
+const preencherSelect = (dados) => {
+    const select = document.getElementById("listaSelecao");
+
+    select.innerHTML = "";
+
+    const optionPadrao = document.createElement("option");
+    optionPadrao.text = "Selecione uma opção";
+    select.add(optionPadrao);
+
+    dados.forEach(function (item) {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.text = item.title;
+        select.add(option);
+    });
+}
+
+const handleSelecaoChange = () => {
+    const select = document.getElementById("listaSelecao");
+    getTask(select.value);
+    
 }
