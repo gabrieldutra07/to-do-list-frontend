@@ -34,6 +34,35 @@ const validatePassword = () => {
     }
 }
 
+const createList = () => {
+   
+    const id = localStorage.getItem("id")
+    const title = document.getElementById("criarList").value
+
+    var data = JSON.stringify({
+        "userId": id,
+        "title": title
+    });
+    
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    
+    xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+            alert("Lista criada com sucesso!")
+            document.getElementById("textList").setAttribute("hidden", true)
+            document.getElementById("criarList").setAttribute("hidden", true)
+            document.getElementById("confirmCreate").setAttribute("hidden", true)
+            getList(id)
+        }
+    });
+    
+    xhr.open("POST", "http://localhost:8080/api/todolist/list/create");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    
+    xhr.send(data);
+}
+
 const createUser = () => {
     const email = document.getElementById("username").value
     const password = document.getElementById("password").value
@@ -87,7 +116,7 @@ const login = () => {
                 setLocalStorage("id", response.id)
                 setLocalStorage("nameUser", response.nameUser)
                 setLocalStorage("isAuth", true)
-                window.location.href = 'lista.html'
+                window.location.href = 'list.html'
             } else if (this.status === 404) {
                 document.getElementById("login-incorrect").removeAttribute("hidden")
             }
@@ -102,6 +131,8 @@ const login = () => {
 
 function preencherTabela(data) {
     var tableBody = document.getElementById("tableBody");
+
+    tableBody.innerHTML = ""
 
     data.forEach(function(item) {
         var row = document.createElement("tr");

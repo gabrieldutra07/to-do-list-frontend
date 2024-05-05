@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/list.css">
     <script src="js/script.js"></script>
 </head>
+
 <body>
     <script>
         validateIsAuth()
@@ -20,11 +22,13 @@
             <ul class="nav-list">
                 <li><a href="#listar-listas" id="lista">Listas</a></li>
                 <li><a href="#criar-tarefa" id="tarefa">Tarefas</a></li>
-                <li><a href="#logout" id="logout">Logout</a></li>
+                <li><a id="logout">Logout</a></li>
             </ul>
         </nav>
         <div class="content">
-            <button class="create-btn">Criar Nova Lista</button>
+            <button class="create-btn" id="createLista">Criar Nova Lista</button>
+            <p hidden id="textList">Título</p> <input id="criarList" hidden type="text" /><br>
+            <button hidden class="create-btn" id="confirmCreate" onclick="createList()">Confirmar</button>
             <table id="myTable">
                 <thead>
                     <tr>
@@ -40,21 +44,31 @@
     </div>
 </body>
 <script>
-    window.onload = function () {
-        changePage('lista', 'list.html');
-    };
+    document.getElementById("createLista").addEventListener("click", function () {
+        document.getElementById("textList").removeAttribute("hidden")
+        document.getElementById("criarList").removeAttribute("hidden")
+        document.getElementById("confirmCreate").removeAttribute("hidden")
+    })
 
-    window.onload = function () {
-        changePage('tarefa', 'task.html');
-    };
-
-    const userName = localStorage.getItem('nameUser');
-    if (userName) {
-        document.getElementById('welcomeText').innerHTML += ' ' + userName;
-    }
+    changePage('lista', 'list.html');
+    changePage('tarefa', 'task.html');
+    findName()
 
     const listData = getList(localStorage.getItem("id"))
-    
+
+    document.getElementById("logout").addEventListener("click", function () {
+        localStorage.removeItem("isAuth")
+        window.location.href = "index.html"
+    })
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
 </script>
 
 </html>

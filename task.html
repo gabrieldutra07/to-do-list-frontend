@@ -40,18 +40,14 @@
     </div>
 </body>
 <script>
-    window.onload = function () {
-        changePage('tarefa', 'task.html');
-    };
+    changePage('lista', 'list.html');
+    changePage('tarefa', 'task.html');
+    findName()
 
-    window.onload = function () {
-        changePage('lista', 'list.html');
-    };
-
-    const userName = localStorage.getItem('nameUser');
-    if (userName) {
-        document.getElementById('welcomeText').innerHTML += ' ' + userName;
-    }
+    document.getElementById("logout").addEventListener("click", function () {
+        localStorage.removeItem("isAuth")
+        window.location.href = "index.html"
+    })
 
     const listData = getTask(localStorage.getItem("id"))
     
