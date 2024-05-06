@@ -12,8 +12,10 @@
     <script>
         validateIsAuth()
     </script>
+    
     <div class="container">
         <nav class="navbar">
+            
             <div class="navbar-header">
                 <h1>To do list</h1>
                 <p id="welcomeText">Bem vindo, </p>
@@ -26,23 +28,23 @@
             </ul>
         </nav>
         <div class="content">
-            <button class="create-btn" id="createLista">Criar Nova Lista</button>
-            <p hidden id="textList">Título</p> <input id="criarList" hidden type="text" required/><br>
-            <button hidden class="create-btn" id="confirmCreate" onclick="createList()">Confirmar</button>
-            <button hidden class="create-btn" id="editCreate" onclick="editList()">Editar</button>
-            <table id="myTable">
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Data Criação</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                </tbody>
-            </table>
+            <h2 class="dashboard-title">Dashboard de Atividades</h2>
+            <div class="dashboard">
+                <div class="card">
+                    <div class="title">Listas Criadas</div>
+                    <div class="count">5</div>
+                </div>
+                <div class="card">
+                    <div class="title">Tarefas Criadas</div>
+                    <div class="count">23</div>
+                </div>
+                <div class="card">
+                    <div class="title">Tarefas Completadas</div>
+                    <div class="count">5</div>
+                </div>
+            </div>
         </div>
-    </div>
+
 </body>
 <script>
     document.getElementById("createLista").addEventListener("click", function () {

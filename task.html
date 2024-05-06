@@ -18,6 +18,7 @@
                 <p id="welcomeText">Bem vindo, </p>
             </div>
             <ul class="nav-list">
+                <li><a href="#dashboard" id="dashboard">Dashboard</a></li>
                 <li><a href="#listar-listas" id="lista">Listas</a></li>
                 <li><a href="#criar-tarefa" id="tarefa">Tarefas</a></li>
                 <li><a href="#logout" id="logout">Logout</a></li>
@@ -36,6 +37,7 @@
             <p id="textTask"></p><br>
             <select id="listaSelecao"></select><br>
             <button hidden class="create-btn" id="confirmCreateTask" onclick="createTask()">Confirmar</button>
+            <button hidden class="create-btn" id="editTask">Editar</button>
             <table id="myTable">
                 <thead>
                     <tr>
@@ -52,6 +54,7 @@
 <script>
     changePage('lista', 'list.html');
     changePage('tarefa', 'task.html');
+    changePage('dashboard', 'dashboard.html');
     findName()
 
     document.getElementById("logout").addEventListener("click", function () {

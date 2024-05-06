@@ -178,46 +178,56 @@ const preencherTabelaList = (data) => {
 
     tableBody.innerHTML = "";
 
-    data.forEach(function (item) {
+    if (data.length === 0) {
         var row = document.createElement("tr");
-        var titleCell = document.createElement("td");
-        titleCell.textContent = item.title;
-
-        var dateCell = document.createElement("td");
-        dateCell.textContent = new Date(item.dateCreated).toLocaleDateString('pt-BR');
-
-        var actionCell = document.createElement("td");
-
-        var editButton = document.createElement("button");
-        editButton.innerHTML = "🖊";
-        editButton.className = "action-button";
-        editButton.onclick = function () {
-            let textList = document.getElementById("textList")
-            let criarList = document.getElementById("criarList")
-            let editLista = document.getElementById("editCreate")
-            textList.removeAttribute("hidden")
-            criarList.removeAttribute("hidden")
-            criarList.value = item.title
-            setLocalStorage("listId", item.id)
-            editLista.removeAttribute("hidden")
-        };
-
-        var deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "🗑";
-        deleteButton.className = "action-button";
-        deleteButton.onclick = function () {
-            deleteList(item.id)
-        };
-
-        actionCell.appendChild(editButton);
-        actionCell.appendChild(deleteButton);
-
-        row.appendChild(titleCell);
-        row.appendChild(dateCell);
-        row.appendChild(actionCell);
-
+        var noDataCell = document.createElement("td");
+        noDataCell.colSpan = 3;
+        noDataCell.textContent = "Nenhuma informação encontrada";
+        row.appendChild(noDataCell);
         tableBody.appendChild(row);
-    });
+    } else {
+
+        data.forEach(function (item) {
+            var row = document.createElement("tr");
+            var titleCell = document.createElement("td");
+            titleCell.textContent = item.title;
+
+            var dateCell = document.createElement("td");
+            dateCell.textContent = new Date(item.dateCreated).toLocaleDateString('pt-BR');
+
+            var actionCell = document.createElement("td");
+
+            var editButton = document.createElement("button");
+            editButton.innerHTML = "🖊";
+            editButton.className = "action-button";
+            editButton.onclick = function () {
+                let textList = document.getElementById("textList")
+                let criarList = document.getElementById("criarList")
+                let editLista = document.getElementById("editCreate")
+                textList.removeAttribute("hidden")
+                criarList.removeAttribute("hidden")
+                criarList.value = item.title
+                setLocalStorage("listId", item.id)
+                editLista.removeAttribute("hidden")
+            };
+
+            var deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "🗑";
+            deleteButton.className = "action-button";
+            deleteButton.onclick = function () {
+                deleteList(item.id)
+            };
+
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+
+            row.appendChild(titleCell);
+            row.appendChild(dateCell);
+            row.appendChild(actionCell);
+
+            tableBody.appendChild(row);
+        });
+    }
 }
 
 const editList = () => {
@@ -252,54 +262,73 @@ const preencherTabelaTask = (data) => {
     var tableBody = document.getElementById("tableBodyTask");
 
     tableBody.innerHTML = ""
-
-    data.forEach(function (item) {
+    if (data.length === 0) {
         var row = document.createElement("tr");
-        var descriptionCell = document.createElement("td");
-        var completeCell = document.createElement("td");
-
-        descriptionCell.textContent = item.description;
-        completeCell.textContent = formatCompleted(item.complete)
-
-        var actionCell = document.createElement("td");
-
-        var editButton = document.createElement("button");
-        editButton.className = "action-button";
-        editButton.innerHTML = "🖊";
-        editButton.onclick = function () {
-            console.log("Editar", item);
-        };
-
-        var deleteButton = document.createElement("button");
-        deleteButton.className = "action-button";
-        deleteButton.innerHTML = "🗑";
-        deleteButton.onclick = function () {
-            var id = item.listId
-            deleteTask(item.id)
-            getTask(id)
-        };
-
-        var completeButton = document.createElement("button");
-        completeButton.innerHTML = "✔️";
-        completeButton.className = "action-button";
-        completeButton.onclick = function () {
-            item.complete = true;
-            editTask(item)
-            alert("Tarefa concluída com sucesso!")
-            console.log(item.listId)
-            getTask(item.listId)
-        };
-
-        actionCell.appendChild(completeButton);
-        actionCell.appendChild(editButton);
-        actionCell.appendChild(deleteButton);
-
-        row.appendChild(descriptionCell);
-        row.appendChild(completeCell);
-        row.appendChild(actionCell);
-
+        var noDataCell = document.createElement("td");
+        noDataCell.colSpan = 3; // Spanning all three columns
+        noDataCell.textContent = "Nenhuma informação encontrada";
+        row.appendChild(noDataCell);
         tableBody.appendChild(row);
-    });
+    } else {
+
+        data.forEach(function (item) {
+            var row = document.createElement("tr");
+            var descriptionCell = document.createElement("td");
+            var completeCell = document.createElement("td");
+
+            descriptionCell.textContent = item.description;
+            completeCell.textContent = formatCompleted(item.complete)
+
+            var actionCell = document.createElement("td");
+
+            var editButton = document.createElement("button");
+            editButton.className = "action-button";
+            editButton.innerHTML = "🖊";
+            editButton.onclick = function () {
+                let inputTask = document.getElementById("criarTask")
+                inputTask.removeAttribute("hidden")
+                inputTask.value = item.description
+                let buttonTask = document.getElementById("editTask")
+                buttonTask.removeAttribute("hidden")
+                document.getElementById("descriptionTask").removeAttribute("hidden")
+                buttonTask.addEventListener("click", function () {
+                    item.description = inputTask.value
+                    editTask(item)
+                })
+
+            };
+
+            var deleteButton = document.createElement("button");
+            deleteButton.className = "action-button";
+            deleteButton.innerHTML = "🗑";
+            deleteButton.onclick = function () {
+                var id = item.listId
+                deleteTask(item.id)
+                getTask(id)
+            };
+
+            var completeButton = document.createElement("button");
+            completeButton.innerHTML = "✔️";
+            completeButton.className = "action-button";
+            completeButton.onclick = function () {
+                item.complete = true;
+                completeTask(item)
+                alert("Tarefa concluída com sucesso!")
+                console.log(item.listId)
+                getTask(item.listId)
+            };
+
+            actionCell.appendChild(completeButton);
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+
+            row.appendChild(descriptionCell);
+            row.appendChild(completeCell);
+            row.appendChild(actionCell);
+
+            tableBody.appendChild(row);
+        });
+    }
 }
 
 const getList = (id, isList) => {
@@ -336,7 +365,7 @@ const deleteList = (listId) => {
                 getList(localStorage.getItem("id"), true)
             } else if (this.status === 400) {
                 var response = JSON.parse(this.responseText)
-                alert(response.messagefa)
+                alert(response.message)
             }
         }
     });
@@ -415,7 +444,11 @@ const editTask = (task) => {
 
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-            console.log(this.responseText);
+            alert("Tarefa editada com sucesso!")
+            document.getElementById("descriptionTask").setAttribute("hidden", true)
+            document.getElementById("criarTask").setAttribute("hidden", true)
+            document.getElementById("editTask").setAttribute("hidden", true)
+            getTask(task.listId)
         }
     });
 
