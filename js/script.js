@@ -34,33 +34,35 @@ const validatePassword = () => {
     }
 }
 
-const createList = () => {
+const createList = (isCreate) => {
+    if(isCreate) {
+    
+        const id = localStorage.getItem("id")
+        const title = document.getElementById("criarList").value
 
-    const id = localStorage.getItem("id")
-    const title = document.getElementById("criarList").value
+        var data = JSON.stringify({
+            "userId": id,
+            "title": title
+        });
 
-    var data = JSON.stringify({
-        "userId": id,
-        "title": title
-    });
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
 
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                alert("Lista criada com sucesso!")
+                document.getElementById("textList").setAttribute("hidden", true)
+                document.getElementById("criarList").setAttribute("hidden", true)
+                document.getElementById("confirmCreate").setAttribute("hidden", true)
+                getList(id, true)
+            }
+        });
 
-    xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-            alert("Lista criada com sucesso!")
-            document.getElementById("textList").setAttribute("hidden", true)
-            document.getElementById("criarList").setAttribute("hidden", true)
-            document.getElementById("confirmCreate").setAttribute("hidden", true)
-            getList(id, true)
-        }
-    });
+        xhr.open("POST", "http://localhost:8080/api/todolist/list/create");
+        xhr.setRequestHeader("Content-Type", "application/json");
 
-    xhr.open("POST", "http://localhost:8080/api/todolist/list/create");
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.send(data);
+        xhr.send(data);
+    }
 }
 
 const createTask = () => {
@@ -188,13 +190,25 @@ const preencherTabelaList = (data) => {
         var actionCell = document.createElement("td");
 
         var editButton = document.createElement("button");
-        editButton.innerHTML = "🖊"; // Substitua pelo ícone de edição desejado
+        editButton.innerHTML = "🖊";
+        editButton.className = "action-button";
         editButton.onclick = function () {
-
+            const textList = document.getElementById("textList")
+            const criarList = document.getElementById("criarList")
+            const confirmList = document.getElementById("confirmCreate")
+            textList.removeAttribute("hidden")
+            criarList.removeAttribute("hidden")
+            criarList.value = item.title
+            confirmList.removeAttribute("hidden")
+            item.title = criarList.value
+            console.log("antesss > ", item)
+            editList(item)
+            getList(localStorage.getItem("id"), true)
         };
 
         var deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "🗑"; // Substitua pelo ícone de exclusão desejado
+        deleteButton.innerHTML = "🗑";
+        deleteButton.className = "action-button";
         deleteButton.onclick = function () {
             deleteList(item.id)
         };
@@ -208,6 +222,26 @@ const preencherTabelaList = (data) => {
 
         tableBody.appendChild(row);
     });
+}
+
+const editList = (item) => {
+    var data = JSON.stringify({
+        "title": item.title
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            console.log(this.responseText);
+        }
+    });
+
+    xhr.open("PUT", "http://localhost:8080/api/todolist/list/edit?listId="+ item.id +"");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.send(data);
 }
 
 const preencherTabelaTask = (data) => {
@@ -226,17 +260,33 @@ const preencherTabelaTask = (data) => {
         var actionCell = document.createElement("td");
 
         var editButton = document.createElement("button");
+        editButton.className = "action-button";
         editButton.innerHTML = "🖊";
         editButton.onclick = function () {
             console.log("Editar", item);
         };
 
         var deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "🗑"; // Substitua pelo ícone de exclusão desejado
+        deleteButton.className = "action-button";
+        deleteButton.innerHTML = "🗑";
         deleteButton.onclick = function () {
+            var id = item.listId
             deleteTask(item.id)
+            getTask(id)
         };
 
+        var completeButton = document.createElement("button");
+        completeButton.innerHTML = "✔️";
+        completeButton.className = "action-button";
+        completeButton.onclick = function () {
+            item.complete = true;
+            editTask(item)
+            alert("Tarefa concluída com sucesso!")
+            console.log(item.listId)
+            getTask(item.listId)
+        };
+
+        actionCell.appendChild(completeButton);
         actionCell.appendChild(editButton);
         actionCell.appendChild(deleteButton);
 
@@ -281,6 +331,9 @@ const deleteList = (listId) => {
             if (this.status === 204) {
                 alert("Lista excluída com sucesso!")
                 getList(localStorage.getItem("id"), true)
+            } else if (this.status === 400) {
+                var response = JSON.parse(this.responseText)
+                alert(response.messagefa)
             }
         }
     });
@@ -298,7 +351,6 @@ const deleteTask = (taskId) => {
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             alert("Tarefa excluída com sucesso!")
-            getTask(localStorage.getItem("id"), false)
         }
     });
 
@@ -346,4 +398,26 @@ const handleSelecaoChange = () => {
     const select = document.getElementById("listaSelecao");
     getTask(select.value);
 
+}
+
+const editTask = (task) => {
+    var data = JSON.stringify({
+        "description": task.description,
+        "complete": task.complete,
+        "listId": task.listId
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            console.log(this.responseText);
+        }
+    });
+
+    xhr.open("PUT", "http://localhost:8080/api/todolist/task/edit?taskId=" + task.id + "");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.send(data);
 }

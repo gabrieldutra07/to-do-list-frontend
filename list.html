@@ -27,7 +27,7 @@
         </nav>
         <div class="content">
             <button class="create-btn" id="createLista">Criar Nova Lista</button>
-            <p hidden id="textList">Título</p> <input id="criarList" hidden type="text" /><br>
+            <p hidden id="textList">Título</p> <input id="criarList" hidden type="text" required/><br>
             <button hidden class="create-btn" id="confirmCreate" onclick="createList()">Confirmar</button>
             <table id="myTable">
                 <thead>
@@ -47,6 +47,7 @@
     document.getElementById("createLista").addEventListener("click", function () {
         document.getElementById("textList").removeAttribute("hidden")
         document.getElementById("criarList").removeAttribute("hidden")
+        document.getElementById("criarList").setAttribute("required", true)
         document.getElementById("confirmCreate").removeAttribute("hidden")
     })
 
