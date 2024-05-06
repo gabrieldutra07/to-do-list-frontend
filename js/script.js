@@ -101,7 +101,7 @@ const createTask = () => {
 const formatCompleted = (data) => {
     if (data) {
         return "Sim"
-    } 
+    }
 
     return "Não"
 }
@@ -175,18 +175,36 @@ const login = () => {
 const preencherTabelaList = (data) => {
     var tableBody = document.getElementById("tableBody");
 
-    tableBody.innerHTML = ""
+    tableBody.innerHTML = "";
 
     data.forEach(function (item) {
         var row = document.createElement("tr");
         var titleCell = document.createElement("td");
-        var dateCell = document.createElement("td");
-
         titleCell.textContent = item.title;
+
+        var dateCell = document.createElement("td");
         dateCell.textContent = new Date(item.dateCreated).toLocaleDateString('pt-BR');
+
+        var actionCell = document.createElement("td");
+
+        var editButton = document.createElement("button");
+        editButton.innerHTML = "🖊"; // Substitua pelo ícone de edição desejado
+        editButton.onclick = function () {
+
+        };
+
+        var deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "🗑"; // Substitua pelo ícone de exclusão desejado
+        deleteButton.onclick = function () {
+            deleteList(item.id)
+        };
+
+        actionCell.appendChild(editButton);
+        actionCell.appendChild(deleteButton);
 
         row.appendChild(titleCell);
         row.appendChild(dateCell);
+        row.appendChild(actionCell);
 
         tableBody.appendChild(row);
     });
@@ -205,8 +223,26 @@ const preencherTabelaTask = (data) => {
         descriptionCell.textContent = item.description;
         completeCell.textContent = formatCompleted(item.complete)
 
+        var actionCell = document.createElement("td");
+
+        var editButton = document.createElement("button");
+        editButton.innerHTML = "🖊";
+        editButton.onclick = function () {
+            console.log("Editar", item);
+        };
+
+        var deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "🗑"; // Substitua pelo ícone de exclusão desejado
+        deleteButton.onclick = function () {
+            deleteTask(item.id)
+        };
+
+        actionCell.appendChild(editButton);
+        actionCell.appendChild(deleteButton);
+
         row.appendChild(descriptionCell);
         row.appendChild(completeCell);
+        row.appendChild(actionCell);
 
         tableBody.appendChild(row);
     });
@@ -231,6 +267,42 @@ const getList = (id, isList) => {
     });
 
     xhr.open("GET", "http://localhost:8080/api/todolist/list/get?userId=" + id + "")
+
+    xhr.send();
+}
+
+const deleteList = (listId) => {
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            if (this.status === 204) {
+                alert("Lista excluída com sucesso!")
+                getList(localStorage.getItem("id"), true)
+            }
+        }
+    });
+
+    xhr.open("DELETE", "http://localhost:8080/api/todolist/list/delete?listId=" + listId + "");
+
+    xhr.send();
+}
+
+const deleteTask = (taskId) => {
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            alert("Tarefa excluída com sucesso!")
+            getTask(localStorage.getItem("id"), false)
+        }
+    });
+
+    xhr.open("DELETE", "http://localhost:8080/api/todolist/task/delete?taskId=" + taskId + "");
 
     xhr.send();
 }
