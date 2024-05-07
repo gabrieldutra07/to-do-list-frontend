@@ -84,7 +84,10 @@ const createTask = () => {
     const description = document.getElementById("criarTask").value
     const completedTask = document.getElementById("selectCompletedTask").value
 
-    console.log(description)
+    if(validaTitle(description)) {
+        alert("Preencha a descrição!")
+        return
+    }
 
     var data = JSON.stringify({
         "listId": listId,
