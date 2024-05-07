@@ -53,6 +53,7 @@ const createList = () => {
             document.getElementById("textList").setAttribute("hidden", true)
             document.getElementById("criarList").setAttribute("hidden", true)
             document.getElementById("confirmCreate").setAttribute("hidden", true)
+            document.getElementById("editCreate").setAttribute("hidden", true)
             getList(id, true)
         }
     });
@@ -204,6 +205,7 @@ const preencherTabelaList = (data) => {
                 let textList = document.getElementById("textList")
                 let criarList = document.getElementById("criarList")
                 let editLista = document.getElementById("editCreate")
+                document.getElementById("confirmCreate").setAttribute("hidden", true)
                 textList.removeAttribute("hidden")
                 criarList.removeAttribute("hidden")
                 criarList.value = item.title
@@ -311,9 +313,12 @@ const preencherTabelaTask = (data) => {
             completeButton.innerHTML = "✔️";
             completeButton.className = "action-button";
             completeButton.onclick = function () {
+                if (item.complete) {
+                    alert("A tarefa já está concluída!")
+                    return
+                }
                 item.complete = true;
-                completeTask(item)
-                alert("Tarefa concluída com sucesso!")
+                editTask(item)
                 console.log(item.listId)
                 getTask(item.listId)
             };
@@ -454,6 +459,27 @@ const editTask = (task) => {
 
     xhr.open("PUT", "http://localhost:8080/api/todolist/task/edit?taskId=" + task.id + "");
     xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.send(data);
+}
+
+const getInfo = () => {
+    var data = "";
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            var response = JSON.parse(this.responseText)
+            console.log(this.responseText)
+            document.getElementById("taskCreated").innerHTML = response.taskCount
+            document.getElementById("taskCompleted").innerHTML = response.completedTaskCount
+            document.getElementById("listCreated").innerHTML = response.listCount
+        }
+    });
+
+    xhr.open("GET", "http://localhost:8080/api/todolist/list/getAllListsAndTasks?userId=" + localStorage.getItem("id") +"");
 
     xhr.send(data);
 }
