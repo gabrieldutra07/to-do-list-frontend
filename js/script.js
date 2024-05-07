@@ -130,10 +130,11 @@ const createUser = () => {
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             if (this.status === 201) {
-                alert("Cadastro realizado com sucesso!")
-                window.location.href = 'index.html'
+                alert("Cadastro realizado com sucesso! Confirme seu e-mail para logar.")
+            } else if(this.status === 400) {
+                document.getElementById("email-incorrect").removeAttribute("hidden")
             }
-            console.log(this.responseText);
+            
         }
     });
 
