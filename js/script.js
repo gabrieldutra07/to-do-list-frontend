@@ -34,10 +34,23 @@ const validatePassword = () => {
     }
 }
 
+const validaTitle = (title) => {
+    
+    if(title === "") {
+        alert("Preencha o título da lista!")
+        return true
+    }
+
+}
+
 const createList = () => {
 
     const id = localStorage.getItem("id")
     const title = document.getElementById("criarList").value
+
+    if(validaTitle(title)) {
+        return
+    }
 
     var data = JSON.stringify({
         "userId": id,
@@ -236,6 +249,10 @@ const preencherTabelaList = (data) => {
 const editList = () => {
 
     const edit = document.getElementById("criarList").value
+
+    if(validaTitle(edit)) {
+        return
+    }
 
     var data = JSON.stringify({
         "title": edit
