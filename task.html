@@ -28,16 +28,16 @@
         <div class="content">
             <button class="create-btn" id="createTask">Criar Nova Tarefa</button>
             <p hidden id="descriptionTask">Descrição da tarefa:</p><br>
-            <input id="criarTask" hidden type="text" /><br>
+            <input id="criarTask" hidden type="text" class="simple-input" /><br>
             <p hidden id="completedTask">Tarefá já completada?</p><br>
-            <select hidden id="selectCompletedTask">
+            <select hidden id="selectCompletedTask" class="simple-select">
                 <option value="true">Sim</option>
                 <option value="false">Não</option>
             </select>
             <br>
             <p id="textTask"></p><br>
             <select id="listaSelecao"></select><br>
-            <button hidden class="create-btn" id="confirmCreateTask" onclick="createTask()">Confirmar</button>
+           <br> <button hidden class="create-btn" id="confirmCreateTask" onclick="createTask()">Confirmar</button><br>
             <button hidden class="create-btn" id="editTask">Editar</button>
             <table id="myTable">
                 <thead>
@@ -65,6 +65,7 @@
 
     getList(localStorage.getItem("id"), false)
 
+    document.getElementById("listaSelecao").className = "simple-select"
     document.getElementById("listaSelecao").addEventListener("change", handleSelecaoChange);
 
     const changeParagrafo = (text) => {

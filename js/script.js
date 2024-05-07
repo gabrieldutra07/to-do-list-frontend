@@ -161,7 +161,7 @@ const login = () => {
                 setLocalStorage("id", response.id)
                 setLocalStorage("nameUser", response.nameUser)
                 setLocalStorage("isAuth", true)
-                window.location.href = 'list.html'
+                window.location.href = 'dashboard.html'
             } else if (this.status === 404) {
                 document.getElementById("login-incorrect").removeAttribute("hidden")
             }
